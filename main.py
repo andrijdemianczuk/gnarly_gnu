@@ -16,6 +16,6 @@ if __name__ == '__main__':
     w = WorkspaceClient(profile="ml-1")
     dbutils = w.dbutils
 
-    files_in_root = dbutils.fs.ls('/FileStore/Users/andrij.demianczuk@databricks.com/')
-    for i in (dbutils.fs.ls("/")):
+    # files_in_root = dbutils.fs.ls('/FileStore/Users/andrij.demianczuk@databricks.com/')
+    for i in (dbutils.fs.ls("/FileStore/Users/andrij.demianczuk@databricks.com/data")):
         print(i)
