@@ -9,13 +9,9 @@ from databricks.sdk import WorkspaceClient
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     spark = DatabricksSession.builder.profile("ml-1").getOrCreate()
-    #
-    # df = spark.table("ademianczuk.hls.b_callout")
-    # df.groupBy("Facility").count().show()
-
     w = WorkspaceClient(profile="ml-1")
-    dbutils = w.dbutils
 
-    # files_in_root = dbutils.fs.ls('/FileStore/Users/andrij.demianczuk@databricks.com/')
+    #Test the workspace client version of dbutils
+    dbutils = w.dbutils
     for i in (dbutils.fs.ls("/FileStore/Users/andrij.demianczuk@databricks.com/data")):
         print(i)
