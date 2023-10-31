@@ -23,4 +23,5 @@ a given airport.
 
 ## Databricks Connect  
 DBConnect v2 was used in the development of some parts of this project. To get a quick overview
-of how this was set up on PyCharm, the documentation can b
+of how this was set up on PyCharm, the documentation can be found [here](https://docs.databricks.com/en/dev-tools/databricks-connect/python/index.html).
+The [Databricks SDK](https://docs.databricks.com/en/dev-tools/sdk-python.html) is also extensively used.
