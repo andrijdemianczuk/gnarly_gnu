@@ -1,17 +1,27 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
-# from databricks.sdk.runtime import *
+from databricks.sdk.runtime import *
+from Entities.User import User
 
-# Press the green button in the gutter to run the script.
+import Entities.User
+from Entities.User import User
+
+
+# def get_current_user_name():
+#     return (spark
+#     .createDataFrame([("",)], "user string")
+#     .withColumn("user", f.expr("current_user"))
+#     .head()["user"])
+
 if __name__ == '__main__':
     spark = DatabricksSession.builder.profile("ml-1").getOrCreate()
     w = WorkspaceClient(profile="ml-1")
-
-    #Test the workspace client version of dbutils
     dbutils = w.dbutils
-    for i in (dbutils.fs.ls("/FileStore/Users/andrij.demianczuk@databricks.com/data")):
+
+    current_user = User.getCurrent(spark)
+
+    # Make the directory if it doesn't exist. This will be relative for each user who runs this
+    dbutils.fs.mkdirs(f"/Users/{current_user}/data")
+
+    for i in (dbutils.fs.ls(f"/Users/{current_user}/data")):
         print(i)
