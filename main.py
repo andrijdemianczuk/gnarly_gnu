@@ -16,6 +16,7 @@ if __name__ == '__main__':
     # w = WorkspaceClient(profile="ml-1")
     # dbutils = w.dbutils
 
+
     #Initialize values and settings
     # current_user = User.getCurrent(spark)
     now = datetime.now(tz=timezone.utc)
