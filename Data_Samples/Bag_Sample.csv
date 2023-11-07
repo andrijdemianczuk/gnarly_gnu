@@ -1,0 +1,21 @@
+BagID,Timestamp,Location,ConveyorID,FlightID,PassengerName,Destination,Status,Weight
+123456,2023-10-27 8:00:00,Check-In,C1,WS1111,John Smith,YVR,Checked In,23.5
+123456,2023-10-27 8:05:00,Security,S1,WS1111,John Smith,YVR,In Transit,23.5
+123456,2023-10-27 8:12:00,Routing,R1,WS1111,John Smith,YVR,In Transit,23.5
+123456,2023-10-27 8:22:00,Gate,G1,WS1111,John Smith,YVR,In Transit,23.5
+123456,2023-10-27 8:59:00,Plane,null,WS1111,John Smith,YVR,Loaded,23.5
+234567,2023-10-27 8:00:00,Check-In,C2,WS1111,Jane Brown,YVR,Checked In,22.25
+234567,2023-10-27 8:05:00,Security,S1,WS1111,Jane Brown,YVR,In Transit,22.25
+234567,2023-10-27 8:11:00,Routing,R2,WS1111,Jane Brown,YVR,In Transit,22.25
+234567,2023-10-27 8:20:00,Gate,G1,WS1111,Jane Brown,YVR,In Transit,22.25
+234567,2023-10-27 8:59:00,Plane,null,WS1111,Jane Brown,YVR,Loaded,22.25
+345678,2023-10-27 8:00:00,Check-In,C3,WS1416,Kate Summerfield,YEG,Checked In,16.72
+345678,2023-10-27 8:07:00,Security,S2,WS1416,Kate Summerfield,YEG,In Transit,16.72
+345678,2023-10-27 8:17:00,Routing,R3,WS1416,Kate Summerfield,YEG,In Transit,16.72
+345678,2023-10-27 8:25:00,Gate,G3,WS1416,Kate Summerfield,YEG,In Transit,16.72
+345678,2023-10-27 8:58:00,Plane,null,WS1416,Kate Summerfield,YEG,Loaded,16.72
+456789,2023-10-27 8:00:00,Check-In,C1,WS1145,Brian Westmore,YYZ,Checked In,23.15
+456789,2023-10-27 8:08:00,Security,S1,WS1145,Brian Westmore,YYZ,In Transit,23.15
+456789,2023-10-27 8:16:00,Routing,R1,WS1145,Brian Westmore,YYZ,In Transit,23.15
+456789,2023-10-27 8:29:00,Gate,G1,WS1145,Brian Westmore,YYZ,In Transit,23.15
+456789,2023-10-27 8:53:00,Plane,null,WS1145,Brian Westmore,YYZ,Loaded,23.15

@@ -1,6 +1,5 @@
 from pyspark.sql.functions import expr
 
-
 class User:
     def __init__(self):
         pass

@@ -9,6 +9,7 @@ from faker import Faker
 import random
 from faker.providers import BaseProvider as fake
 
+import Entities.Lookups
 # Entity Imports
 from Entities.User import User
 from Entities.Lookups import Lookups
@@ -31,9 +32,5 @@ if __name__ == '__main__':
     dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage/flights")
     dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage/bagtracking")
 
-    # for i in (dbutils.fs.ls(f"/Users/{current_user}/data/airlines/baggage")):
-    #     print(i)
-
     # Create the lookup tables for airports
     Lookups().generateAirpots(spark=spark, current_user=current_user)
-
