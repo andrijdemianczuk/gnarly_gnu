@@ -1,23 +1,21 @@
 # Databricks Imports
+from datetime import datetime, timezone, timedelta
+
 from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
-from datetime import datetime, date, time, timezone, timedelta
-from databricks.sdk.runtime import *
 
-# Faker / Random Imports
-from faker import Faker
-import random
-from faker.providers import BaseProvider as fake
-
-import Entities.Lookups
+from Entities.Lookups import Lookups
 # Entity Imports
 from Entities.User import User
-from Entities.Lookups import Lookups
+
+# Faker / Random Imports
 
 if __name__ == '__main__':
+    ### Start - Comment out this block if running from within a databricks workspace ###
     spark = DatabricksSession.builder.profile("ml-1").getOrCreate()
     w = WorkspaceClient(profile="ml-1")
     dbutils = w.dbutils
+    ### End ############################################################################
 
     # Initialize values and settings
     current_user = User.getCurrent(spark=spark)
