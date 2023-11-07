@@ -10,3 +10,15 @@ dbutils.fs.ls(f"/Users/{current_user}/")
 
 # Create the working directory if not exists. If it exists, nothing will happen
 dbutils.fs.mkdirs(f"/Users/{current_user}/data")
+
+# COMMAND ----------
+
+dbutils.fs.ls("Users/andrij.demianczuk@databricks.com/data/airlines/baggage/test.parquet")
+
+# COMMAND ----------
+
+dbutils.fs.rm("/Users/andrij.demianczuk@databricks.com/data/airlines/baggage/test.parquet/", True)
+
+# COMMAND ----------
+
+
