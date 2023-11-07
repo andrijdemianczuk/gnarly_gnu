@@ -35,5 +35,5 @@ if __name__ == '__main__':
         print(i)
 
     # Create the lookup tables for airports
-    Lookups().generateAirpots(spark=spark)
+    Lookups().generateAirpots(spark=spark, current_user=current_user)
 

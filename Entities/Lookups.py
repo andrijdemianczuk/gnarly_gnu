@@ -10,7 +10,7 @@ class Lookups:
         print(self.val)
         print(schema)
 
-    def generateAirpots(self, spark, current_user):
+    def generateAirpots(self, spark, current_user, catalog="ademianczuk", database="flights"):
         data = [("YYC","Calgary","AB"),
                 ("YEG","Edmonton","AB"),
                 ("YFC","Fredericton","NB"),
@@ -30,7 +30,6 @@ class Lookups:
                               StructField("Province", StringType(), True)])
 
         df = spark.createDataFrame(data=data, schema=schema)
-        df.show()
+        # df.show()
 
-        # df.write.format('delta').mode('overwrite').save(f"/Users/{current_user}/data/airlines/baggage/lookups")
-
+        df.write.format('delta').option("mergeSchema", True).mode('overwrite').saveAsTable(f"{catalog}.{database}.canada_iata_codes")
