@@ -4,9 +4,11 @@ from datetime import datetime, timezone, timedelta
 from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
 
-from Entities.Lookups import Lookups
+import Generator.Generate
 # Entity Imports
+from Entities.Lookups import Lookups
 from Entities.User import User
+from Generator.Generate import Generate
 
 # Faker / Random Imports
 
@@ -19,8 +21,8 @@ if __name__ == '__main__':
 
     # Initialize values and settings
     current_user = User.getCurrent(spark=spark)
-    now = datetime.now(tz=timezone.utc)
-    then = datetime.now(tz=timezone.utc) - timedelta(hours=1)
+    now = datetime.now()
+    then = datetime.now() - timedelta(hours=1) # use now(tz=timezone.utc) for universal time
     windowStart = datetime.strptime(then.strftime('%Y-%m-%d %H:00:00'), '%Y-%m-%d %H:%M:%S')
     windowEnd = datetime.strptime(then.strftime('%Y-%m-%d %H:59:59'), '%Y-%m-%d %H:%M:%S')
 
@@ -30,5 +32,9 @@ if __name__ == '__main__':
     dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage/flights")
     dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage/bagtracking")
 
-    # Create the lookup tables for airports
-    Lookups().generateAirpots(spark=spark, current_user=current_user)
+    # Create the lookup tables for airports if it doesn't exist
+    if not (spark.catalog.tableExists("ademianczuk.flights.canada_iata_codes")):
+        Lookups().generateAirpots(spark=spark, current_user=current_user)
+
+    #Create an instance of the generator
+    generator = Generate(now=now, windowStart=windowStart, windowEnd=windowEnd)
