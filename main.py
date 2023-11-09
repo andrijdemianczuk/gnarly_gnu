@@ -1,10 +1,9 @@
 # Databricks Imports
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta
 
 from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
 
-import Generator.Generate
 # Entity Imports
 from Entities.Lookups import Lookups
 from Entities.User import User
@@ -47,5 +46,5 @@ if __name__ == '__main__':
         # Invoke the bag history for the past hour
         generator.generateBags()
 
-    except:
-        print("something went wrong")
+    except Exception as e:
+        print(f"something went wrong...{e}")
