@@ -15,7 +15,7 @@ class Generate:
         self.windowEnd = windowEnd
         self.spark = spark
 
-    def generateFlights(self, catalog="ademianczuk", database="flights"):
+    def generateFlights(self, catalog="ademianczuk", database="flights", mode="overwrite"):
         try:
             print("generating flights...")
 
@@ -53,7 +53,7 @@ class Generate:
             df = self.spark.createDataFrame(data=schedule, schema=schema)
             df.show()
 
-            df.write.format('delta').option("mergeSchema", True).mode('overwrite').saveAsTable(
+            df.write.format('delta').option("mergeSchema", True).mode(mode).saveAsTable(
                 f"{catalog}.{database}.flight_schedule")
 
         except Exception as e:
