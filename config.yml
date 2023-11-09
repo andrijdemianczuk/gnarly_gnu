@@ -1,0 +1,11 @@
+config:
+  catalog: "ademianczuk"
+  schema: "flights"
+  owner:
+    fName: "Andrij"
+    lName: "Demianczuk"
+    organization: "Databricks"
+    email: "andrij.demianczuk@databricks.com"
+
+flights:
+  count: 4
