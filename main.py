@@ -29,6 +29,10 @@ if __name__ == '__main__':
         windowStart = datetime.strptime(then.strftime('%Y-%m-%d %H:00:00'), '%Y-%m-%d %H:%M:%S')
         windowEnd = datetime.strptime(then.strftime('%Y-%m-%d %H:59:59'), '%Y-%m-%d %H:%M:%S')
 
+        # Get the config values from the YAML file
+        catalog = "ademianczuk"
+        database = "flights"
+
         # Make the directories if they don't exist. This will be relative for each user who runs this
         dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage")
         dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage/lookups")
@@ -36,7 +40,7 @@ if __name__ == '__main__':
         dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage/bagtracking")
 
         # Create the lookup tables for airports if it doesn't exist
-        if not (spark.catalog.tableExists("ademianczuk.flights.canada_iata_codes")):
+        if not (spark.catalog.tableExists(f"{catalog}.{database}.canada_iata_codes")):
             Lookups().generateAirpots(spark=spark, current_user=current_user)
 
 
@@ -44,7 +48,7 @@ if __name__ == '__main__':
         generator = Generate(now=now, windowStart=windowStart, windowEnd=windowEnd, spark=spark)
 
         # Invoke the flights for the past hour
-        generator.generateFlights()
+        generator.generateFlights(mode="overwrite", catalog=catalog, database=database)
 
         # Invoke the bag history for the past hour
         generator.generateBags()

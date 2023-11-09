@@ -9,3 +9,6 @@ config:
 
 flights:
   count: 4
+
+developer:
+  debug: False

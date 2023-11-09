@@ -1,11 +1,10 @@
-from datetime import date, datetime, timedelta
 import random
+from datetime import timedelta
 
-import faker
 from faker import Faker
 from faker_airtravel import AirTravelProvider
+from pyspark.sql.types import StructType, StructField, StringType
 
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
 class Generate:
 
@@ -15,7 +14,7 @@ class Generate:
         self.windowEnd = windowEnd
         self.spark = spark
 
-    def generateFlights(self, catalog="ademianczuk", database="flights", mode="overwrite"):
+    def generateFlights(self, catalog="hive_metastore", database="default", mode="overwrite"):
         try:
             print("generating flights...")
 
@@ -28,7 +27,7 @@ class Generate:
             df = self.spark.table("ademianczuk.flights.canada_iata_codes").select("IATA")
             df = df.filter(df.IATA != "YYC")
             iata_list = list(df.select('IATA').
-                       toPandas()['IATA'])
+                             toPandas()['IATA'])
 
             # Define the structure of the dataframe
             schema = StructType([StructField("Flight_Number", StringType(), True),
@@ -37,13 +36,13 @@ class Generate:
                                  StructField("Cutoff_Time", StringType(), True)])
 
             # Create the loop parameters
-            mins = 0 # offset minutes
+            mins = 0  # offset minutes
             schedule = []
 
             # Iterate and build the schedule itinerary
             for _ in range(4):
                 flight_num = f"WS1{random.randint(111, 999)}"
-                departure_time = self.windowEnd - timedelta(minutes=15+mins)
+                departure_time = self.windowEnd - timedelta(minutes=15 + mins)
                 cutoff_time = departure_time - timedelta(minutes=15)
                 destination = random.choice(iata_list)
                 mins += 5
