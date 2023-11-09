@@ -10,9 +10,8 @@ from Entities.Lookups import Lookups
 from Entities.User import User
 from Generator.Generate import Generate
 
+#Faker driver Import
 from faker import Faker
-
-# Faker / Random Imports
 
 if __name__ == '__main__':
     try:
