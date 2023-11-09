@@ -1,6 +1,7 @@
 # Databricks Imports
 from datetime import datetime, timedelta
 
+import faker_airtravel
 from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
 
@@ -8,6 +9,8 @@ from databricks.sdk import WorkspaceClient
 from Entities.Lookups import Lookups
 from Entities.User import User
 from Generator.Generate import Generate
+
+from faker import Faker
 
 # Faker / Random Imports
 
@@ -38,7 +41,7 @@ if __name__ == '__main__':
 
 
         # Create an instance of the generator
-        generator = Generate(now=now, windowStart=windowStart, windowEnd=windowEnd)
+        generator = Generate(now=now, windowStart=windowStart, windowEnd=windowEnd, spark=spark)
 
         # Invoke the flights for the past hour
         generator.generateFlights()
