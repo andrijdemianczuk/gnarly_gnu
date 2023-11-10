@@ -29,8 +29,8 @@ if __name__ == '__main__':
         windowEnd = datetime.strptime(then.strftime('%Y-%m-%d %H:59:59'), '%Y-%m-%d %H:%M:%S')
 
         # Get the config values from the YAML file
-        catalog = "ademianczuk"
-        database = "flights"
+        catalog = "ademianczuk" # hard coded for now until I get the parser going
+        database = "flights" # hard coded for now until I get the parser going
 
         # Make the directories if they don't exist. This will be relative for each user who runs this
         dbutils.fs.mkdirs(f"/Users/{current_user}/data/airlines/baggage")
