@@ -11,16 +11,43 @@ import pandas as pd
 
 # DBTITLE 1,Define our Bag as an Object
 from datetime import datetime
+from faker import Faker
+import random
+
 
 class Bag:
-  
-  def __init__(self):
-    pass
+    def __init__(self):
+        self.fake = Faker()
+        self.setWeight()
+        self.setPassengerName()
+        self.setTimeOrigin()
 
-  def checkBag(self, flight_id:str="unknown"):
-    # print(flight_id)
-    checkinTime = datetime.now()
+    def setWeight(self):
+        self.weight = random.randint(15, 40)
 
+    def getWeight(self):
+        return self.weight
+      
+    def setPassengerName(self):
+      self.passenger_name = self.fake.name_nonbinary()
+
+    def getPassengerName(self):
+      return self.passenger_name
+    
+    def setTimeOrigin(self):
+      self.time_origin = datetime.now()
+
+    def getTimeOrigin(self):
+      return self.time_origin
+
+    def checkBag(self, flight_id: str = "unknown"):
+        bag_number = self.fake.random_number(digits=9)
+        bag_weight = self.getWeight()
+        passenger_name = self.getPassengerName()
+        time_origin = self.getTimeOrigin()
+        print(
+            f"bag: {bag_number} flight ID: {flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}"
+        )
 
 # COMMAND ----------
 
