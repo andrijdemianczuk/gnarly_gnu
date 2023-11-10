@@ -21,4 +21,4 @@ dbutils.fs.rm("/Users/andrij.demianczuk@databricks.com/data/airlines/baggage/tes
 
 # COMMAND ----------
 
-
+dbutils.library.restartPython()
