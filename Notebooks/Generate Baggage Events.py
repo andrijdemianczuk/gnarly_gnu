@@ -24,6 +24,7 @@ class Bag:
         self.windowStart = windowStart
         self.windowEnd = windowEnd
         self.passengerCount = passenger_count
+        self.isLost = False
 
     def setWeight(self):
         self.weight = random.randint(15, 40)
@@ -53,6 +54,20 @@ class Bag:
             f"bag: {bag_number} flight ID: {flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
         )
 
+        # print(self.fake.boolean(1)) # 1% loss rate due either to security or being dropped
+
+    def secureBag(self):
+      pass
+
+    def routeBag(self):
+      pass
+
+    def gateBag(self):
+      pass
+
+    def onboardBag(self):
+      pass
+
 # COMMAND ----------
 
 catalog = "ademianczuk"
@@ -78,4 +93,16 @@ for i in flight_IDs:
 
     for _ in range(bag_count):
         bag = Bag(windowStart=windowStart, windowEnd=windowEnd, passenger_count=passenger_count)
+        
+        # This is where the bag gets it's initial attributes
         bag.checkBag(flight_id=i)
+
+        #bag.secureBag
+        
+        #bag.routeBag
+
+        #bag.gateBag
+
+    # At the cutoff time, board the bags on to the plane
+    # If bag made it to the gate
+    #bag.onboardBag
