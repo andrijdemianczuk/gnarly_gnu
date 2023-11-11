@@ -16,7 +16,7 @@ import random
 
 
 class Bag:
-    def __init__(self, windowStart, windowEnd, passenger_count:int = 0):
+    def __init__(self, windowStart, windowEnd, flight_id:str="unknown", passenger_count:int = 0):
         self.fake = Faker()
         self.setWeight()
         self.setPassengerName()
@@ -24,7 +24,13 @@ class Bag:
         self.windowStart = windowStart
         self.windowEnd = windowEnd
         self.passengerCount = passenger_count
+        self.flight_id = flight_id
         self.isLost = False
+        self.conveyor_c = ["C1", "C2", "C3", "C4"]
+        self.conveyor_s = ["S1", "S2"]
+        self.conveyor_r = ["R1", "R2", "R3"]
+        self.conveyor_g = ["G1", "G2", "G3", "G4"]
+
 
     def setWeight(self):
         self.weight = random.randint(15, 40)
@@ -44,29 +50,33 @@ class Bag:
     def getTimeOrigin(self):
       return self.time_origin
 
-    def checkBag(self, flight_id: str = "unknown"):
+    def checkBag(self):
         bag_number = self.fake.random_number(digits = 9)
         bag_weight = self.getWeight()
         passenger_name = self.getPassengerName()
         time_origin = self.getTimeOrigin()
         
+        
         print(
-            f"bag: {bag_number} flight ID: {flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
+            f"bag: {bag_number} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
         )
 
-        # print(self.fake.boolean(1)) # 1% loss rate due either to security or being dropped
-
     def secureBag(self):
-      pass
-
+      offset = random.randint(3,10)
+      self.isLost = self.fake.boolean(1)
+      
     def routeBag(self):
-      pass
+      offset = random.randint(2,9)
+      self.isLost = self.fake.boolean(1)
 
     def gateBag(self):
-      pass
+      offset = random.randint(4,11)
+      self.isLost = self.fake.boolean(1)
 
     def onboardBag(self):
-      pass
+      self.isLost = self.fake.boolean(1)
+      print("onboarding.......")
+      
 
 # COMMAND ----------
 
@@ -92,17 +102,20 @@ for i in flight_IDs:
     windowEnd = datetime.strptime(then.strftime('%Y-%m-%d %H:29:59'), '%Y-%m-%d %H:%M:%S')
 
     for _ in range(bag_count):
-        bag = Bag(windowStart=windowStart, windowEnd=windowEnd, passenger_count=passenger_count)
+        bag = Bag(windowStart=windowStart, windowEnd=windowEnd, flight_id=i, passenger_count=passenger_count)
         
         # This is where the bag gets it's initial attributes
-        bag.checkBag(flight_id=i)
+        bag.checkBag()
 
-        #bag.secureBag
+        # Bag goes through security screening - has a chance of being flagged 
+        bag.secureBag()
         
-        #bag.routeBag
+        # Bag gets routher to the gate - has a chance of getting lost here
+        bag.routeBag()
 
-        #bag.gateBag
+        # Bag is gated
+        bag.gateBag()
 
     # At the cutoff time, board the bags on to the plane
-    # If bag made it to the gate
-    #bag.onboardBag
+    # If bag made it to the gate. Has a chance of being dropped here
+    bag.onboardBag()
