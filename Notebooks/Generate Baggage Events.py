@@ -53,18 +53,19 @@ class Bag:
     def getIsLost(self):
       return self.isLost
 
-    def checkBag(self):
+    def checkBag(self) -> list:
       self.bag_number = self.fake.random_number(digits = 9)
       bag_weight = self.getWeight()
       passenger_name = self.getPassengerName()
       time_origin = self.getTimeOrigin()
       conveyor = random.choice(self.conveyor_c)
       
-      print(
-          f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
-      )
+      # print(
+      #     f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
+      # )
+      return {"list"}
 
-    def secureBag(self):
+    def secureBag(self) -> list:
       offset = random.randint(3,10)
       self.isLost = self.fake.boolean(5) # high likelihood of getting pulled at security
       self.time_s = self.getTimeOrigin() + timedelta(minutes=offset)
@@ -72,11 +73,12 @@ class Bag:
       passenger_name = self.getPassengerName()
       conveyor = random.choice(self.conveyor_s)
 
-      print(
-        f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_s}. Total passengers: {passenger_count}"
-      )
+      # print(
+      #   f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_s}. Total passengers: {passenger_count}"
+      # )
+      return {"list"}
       
-    def routeBag(self):
+    def routeBag(self) -> list:
       offset = random.randint(2,9)
       self.isLost = self.fake.boolean(1)
       self.time_r = self.time_s + timedelta(minutes=offset)
@@ -84,11 +86,12 @@ class Bag:
       passenger_name = self.getPassengerName()
       conveyor = random.choice(self.conveyor_r)
 
-      print(
-        f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_r}. Total passengers: {passenger_count}"
-      )
+      # print(
+      #   f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_r}. Total passengers: {passenger_count}"
+      # )
+      # return {"list"}
 
-    def gateBag(self):
+    def gateBag(self) -> list:
       offset = random.randint(4,11)
       self.isLost = self.fake.boolean(1)
       self.time_g = self.time_r + timedelta(minutes=offset)
@@ -96,24 +99,27 @@ class Bag:
       passenger_name = self.getPassengerName()
       conveyor = random.choice(self.conveyor_g)
 
-      print(
-        f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_g}. Total passengers: {passenger_count}"
-      )
+      # print(
+      #   f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_g}. Total passengers: {passenger_count}"
+      # )
+      return {"list"}
 
-    def onboardBag(self, cutoff):
+    def onboardBag(self, cutoff) -> list:
       self.isLost = self.fake.boolean(1)
       bag_weight = self.getWeight()
       passenger_name = self.getPassengerName()
 
-      print(
-        f"bag: {self.bag_number} location: on plane flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {cutoff}. Total passengers: {passenger_count}"
-      )
+      # print(
+      #   f"bag: {self.bag_number} location: on plane flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {cutoff}. Total passengers: {passenger_count}"
+      # )
+      return {"list"}
 
 # COMMAND ----------
 
 catalog = "ademianczuk"
 database = "flights"
 index = 0
+rows_list=[]
 
 flightsDF = (
     spark.table(f"{catalog}.{database}.flight_schedule")
@@ -165,3 +171,16 @@ for i in flight_IDs:
         # If bag made it to the gate. Has a chance of being dropped here
         if not (bag.getIsLost()):
             bag.onboardBag(cutoff_time)
+
+# COMMAND ----------
+
+rows_list = []
+for row in input_rows:
+    dict1 = {} #list
+    # get input row in dictionary format
+    # key = col_name
+    dict1.update(blah..) 
+
+    rows_list.append(dict1)
+
+df = pd.DataFrame(rows_list)    
