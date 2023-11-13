@@ -49,29 +49,56 @@ class Bag:
 
     def getTimeOrigin(self):
       return self.time_origin
+    
+    def getIsLost(self):
+      return self.isLost
 
     def checkBag(self):
-        bag_number = self.fake.random_number(digits = 9)
-        bag_weight = self.getWeight()
-        passenger_name = self.getPassengerName()
-        time_origin = self.getTimeOrigin()
-        
-        
-        print(
-            f"bag: {bag_number} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
-        )
+      self.bag_number = self.fake.random_number(digits = 9)
+      bag_weight = self.getWeight()
+      passenger_name = self.getPassengerName()
+      time_origin = self.getTimeOrigin()
+      conveyor = random.choice(self.conveyor_c)
+      
+      print(
+          f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
+      )
 
     def secureBag(self):
       offset = random.randint(3,10)
-      self.isLost = self.fake.boolean(1)
+      self.isLost = self.fake.boolean(5) # high likelihood of getting pulled at security
+      self.time_s = self.getTimeOrigin() + timedelta(minutes=offset)
+      bag_weight = self.getWeight()
+      passenger_name = self.getPassengerName()
+      conveyor = random.choice(self.conveyor_s)
+
+      print(
+        f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_s}. Total passengers: {passenger_count}"
+      )
       
     def routeBag(self):
       offset = random.randint(2,9)
       self.isLost = self.fake.boolean(1)
+      self.time_r = self.time_s + timedelta(minutes=offset)
+      bag_weight = self.getWeight()
+      passenger_name = self.getPassengerName()
+      conveyor = random.choice(self.conveyor_r)
+
+      print(
+        f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_r}. Total passengers: {passenger_count}"
+      )
 
     def gateBag(self):
       offset = random.randint(4,11)
       self.isLost = self.fake.boolean(1)
+      self.time_g = self.time_r + timedelta(minutes=offset)
+      bag_weight = self.getWeight()
+      passenger_name = self.getPassengerName()
+      conveyor = random.choice(self.conveyor_g)
+
+      print(
+        f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_g}. Total passengers: {passenger_count}"
+      )
 
     def onboardBag(self):
       self.isLost = self.fake.boolean(1)
@@ -108,14 +135,19 @@ for i in flight_IDs:
         bag.checkBag()
 
         # Bag goes through security screening - has a chance of being flagged 
-        bag.secureBag()
+        if not (bag.getIsLost()):
+            bag.secureBag()
         
         # Bag gets routher to the gate - has a chance of getting lost here
-        bag.routeBag()
+        if not (bag.getIsLost()):
+            bag.routeBag()
 
         # Bag is gated
-        bag.gateBag()
+        if not (bag.getIsLost()):
+            bag.gateBag()
 
-    # At the cutoff time, board the bags on to the plane
-    # If bag made it to the gate. Has a chance of being dropped here
-    bag.onboardBag()
+        ##### LEAVING OFF HERE
+        # At the cutoff time, board the bags on to the plane
+        # If bag made it to the gate. Has a chance of being dropped here
+        if not (bag.getIsLost()):
+            bag.onboardBag() #Left off here
