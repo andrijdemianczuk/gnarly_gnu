@@ -100,15 +100,16 @@ class Bag:
         f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_g}. Total passengers: {passenger_count}"
       )
 
-    def onboardBag(self):
+    def onboardBag(self, cutoff):
       self.isLost = self.fake.boolean(1)
-      print("onboarding.......")
+      print(cutoff)
       
 
 # COMMAND ----------
 
 catalog = "ademianczuk"
 database = "flights"
+index = 0
 
 flightsDF = (
     spark.table(f"{catalog}.{database}.flight_schedule")
@@ -119,6 +120,10 @@ flight_IDs = (
     flightsDF.select(flightsDF.Flight_Number).rdd.flatMap(lambda x: x).collect()
 )
 
+flight_cutoffs = (
+    flightsDF.select(flightsDF.Cutoff_Time).rdd.flatMap(lambda x: x).collect()
+)
+
 # for each flight, generate the number of passenger and checked bags
 for i in flight_IDs:
     passenger_count = random.randint(100, 165)
@@ -127,6 +132,8 @@ for i in flight_IDs:
     then = datetime.now() - timedelta(hours=2)  # use now(tz=timezone.utc) for universal time
     windowStart = datetime.strptime(then.strftime('%Y-%m-%d %H:00:00'), '%Y-%m-%d %H:%M:%S')
     windowEnd = datetime.strptime(then.strftime('%Y-%m-%d %H:29:59'), '%Y-%m-%d %H:%M:%S')
+    cutoff_time = flight_cutoffs[index]
+    index += 1
 
     for _ in range(bag_count):
         bag = Bag(windowStart=windowStart, windowEnd=windowEnd, flight_id=i, passenger_count=passenger_count)
@@ -146,8 +153,7 @@ for i in flight_IDs:
         if not (bag.getIsLost()):
             bag.gateBag()
 
-        ##### LEAVING OFF HERE
         # At the cutoff time, board the bags on to the plane
         # If bag made it to the gate. Has a chance of being dropped here
         if not (bag.getIsLost()):
-            bag.onboardBag() #Left off here
+            bag.onboardBag(cutoff_time)
