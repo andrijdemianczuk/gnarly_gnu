@@ -61,7 +61,7 @@ class Bag:
       conveyor = random.choice(self.conveyor_c)
       
       print(
-          f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
+          f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} checked in at: {time_origin}. Total passengers: {passenger_count}"
       )
 
     def secureBag(self):
@@ -73,7 +73,7 @@ class Bag:
       conveyor = random.choice(self.conveyor_s)
 
       print(
-        f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_s}. Total passengers: {passenger_count}"
+        f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_s}. Total passengers: {passenger_count}"
       )
       
     def routeBag(self):
@@ -85,7 +85,7 @@ class Bag:
       conveyor = random.choice(self.conveyor_r)
 
       print(
-        f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_r}. Total passengers: {passenger_count}"
+        f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_r}. Total passengers: {passenger_count}"
       )
 
     def gateBag(self):
@@ -97,13 +97,17 @@ class Bag:
       conveyor = random.choice(self.conveyor_g)
 
       print(
-        f"bag: {self.bag_number} conveyor:{conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_g}. Total passengers: {passenger_count}"
+        f"bag: {self.bag_number} location: {conveyor} flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {self.time_g}. Total passengers: {passenger_count}"
       )
 
     def onboardBag(self, cutoff):
       self.isLost = self.fake.boolean(1)
-      print(cutoff)
-      
+      bag_weight = self.getWeight()
+      passenger_name = self.getPassengerName()
+
+      print(
+        f"bag: {self.bag_number} location: on plane flight ID: {self.flight_id} bag weight: {bag_weight} passenger: {passenger_name} scanned at: {cutoff}. Total passengers: {passenger_count}"
+      )
 
 # COMMAND ----------
 
