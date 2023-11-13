@@ -128,6 +128,10 @@ flight_cutoffs = (
     flightsDF.select(flightsDF.Cutoff_Time).rdd.flatMap(lambda x: x).collect()
 )
 
+bagsPDF = (
+    pd.DataFrame(columns=["bag_id", "location", "flight_id", "bag_weight_kg", "passenger", "time_stamp", "passenger_count"])
+)
+
 # for each flight, generate the number of passenger and checked bags
 for i in flight_IDs:
     passenger_count = random.randint(100, 165)
