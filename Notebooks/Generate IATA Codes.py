@@ -58,3 +58,6 @@ class Lookups:
 if not (spark.catalog.tableExists(f"{catalog}.{database}.canada_iata_codes")):
   lk = Lookups()
   lk.generateAirpots(current_user=current_user, catalog=catalog, database=database)
+
+# lk = Lookups()
+# lk.generateAirpots(current_user=current_user, catalog=catalog, database=database)
