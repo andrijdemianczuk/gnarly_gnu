@@ -36,7 +36,7 @@ mins = 0
 
 for i in range(4):
   flights = [
-    f"WS1{random.randint(111,999)}",
+    f"WS{random.randint(1111,9999)}",
     random.choice(iata_codes),
     windowEnd - timedelta(minutes=15 + mins),
     windowEnd - timedelta(minutes=30 + mins)
