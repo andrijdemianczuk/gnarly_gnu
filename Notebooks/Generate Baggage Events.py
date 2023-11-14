@@ -138,52 +138,34 @@ for i in flight_IDs:
         bag = Bag(windowStart=windowStart, windowEnd=windowEnd, flight_id=i, passenger_count=passenger_count)
         
         # This is where the bag gets it's initial attributes
-        # print(bag.checkBag())
         rows_list.append(bag.checkBag())
 
         # Bag goes through security screening - has a chance of being flagged 
         if not (bag.getIsLost()):
-            # print(bag.secureBag())
             rows_list.append(bag.secureBag())
         
         # Bag gets routher to the gate - has a chance of getting lost here
         if not (bag.getIsLost()):
-            # print(bag.routeBag())
             rows_list.append(bag.routeBag())
 
         # Bag is gated
         if not (bag.getIsLost()):
-            # print(bag.gateBag())
             rows_list.append(bag.gateBag())
 
         # At the cutoff time, board the bags on to the plane
         # If bag made it to the gate. Has a chance of being dropped here
         if not (bag.getIsLost()):
-            # print(bag.onboardBag(cutoff_time))
             rows_list.append(bag.onboardBag(cutoff=cutoff_time))
 
 # COMMAND ----------
 
-for i in rows_list:
-  print(i)
-
-# COMMAND ----------
-
+# Create the pandas dataframe from the dictionary of rows
 df = pd.DataFrame(rows_list)
+df = df.rename(columns={0:"bag_id", 1:"location", 2:"flight_id", 3:"bag_weight_kg", 4:"passenger", 5:"time_stamp", 6:"passenger_count"})
 
-# COMMAND ----------
+# Convert the pandas dataframe to a PySpark dataframe and append it to the table
+bDF = spark.createDataFrame(df)
+bDF.coalesce(1)
+bDF.write.format('delta').option("mergeSchema", True).mode('append').saveAsTable(f"{catalog}.{database}.bag_tracking")
 
-df
 
-# COMMAND ----------
-
-# rows_list = []
-# for row in input_rows:
-#     dict1 = {} #list
-#     # get input row in dictionary format
-#     # key = col_name
-#     dict1.update(blah..) 
-
-#     rows_list.append(dict1)
-
-# df = pd.DataFrame(rows_list)    
