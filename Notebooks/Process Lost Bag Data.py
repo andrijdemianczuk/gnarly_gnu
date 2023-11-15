@@ -1,31 +1,20 @@
 # Databricks notebook source
 # DBTITLE 1,Imports
 from pyspark.sql.functions import *
+from pyspark.sql.window import Window
 
-# COMMAND ----------
-
-# DBTITLE 1,Variable Init
 catalog = "ademianczuk"
 database = "flights"
 
-# COMMAND ----------
-
-# DBTITLE 1,Pull in the landed (raw) data
 flights_df = spark.table(f"{catalog}.{database}.flight_schedule")
 bags_df = spark.table(f"{catalog}.{database}.bag_tracking")
 
 # COMMAND ----------
 
 # DBTITLE 1,Build the latest collection of flights
-from pyspark.sql.window import Window
-
 w = Window.partitionBy("Flight_Number").orderBy(col("Departure_Time").desc())
-
 flights_df = flights_df.withColumn("row",row_number().over(w)).filter(col("row") == 1).drop("row")
 
-# COMMAND ----------
-
-# DBTITLE 1,Reformat the flight table
 flights_df = (flights_df
               .withColumnRenamed("Flight_Number", "flight_id")
               .withColumnRenamed("Destination", "destination")
