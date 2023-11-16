@@ -1,12 +1,9 @@
 # Databricks notebook source
+# DBTITLE 1,Initialize and load the datasets
 from pyspark.sql.functions import *
-
-# COMMAND ----------
 
 catalog = "ademianczuk"
 database = "flights"
-
-# COMMAND ----------
 
 lost_bags_df = spark.table(f"{catalog}.{database}.lost_bags_summary")
 display(lost_bags_df)

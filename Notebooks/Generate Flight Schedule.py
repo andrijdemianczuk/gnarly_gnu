@@ -52,7 +52,3 @@ flightsDF
 fDF = spark.createDataFrame(flightsDF)
 fDF.coalesce(1)
 fDF.write.format('delta').option("mergeSchema", True).mode('append').saveAsTable(f"{catalog}.{database}.flight_schedule")
-
-# COMMAND ----------
-
-
