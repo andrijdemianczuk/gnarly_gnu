@@ -51,6 +51,13 @@ loaded_df.show(5)
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC ## Visualizing Data
+# MAGIC
+# MAGIC Visualizing data is the fastest and easiest way to concisely and accurately evaluate data. Understanding data structure and context is critically important to understanding how we can move forward and use the data points to make business decisions. Here we will visualize our data as a 2-dimensional matrix with the intent of understanding the relationship between loaded bags and bag weight. There are assumptions for example that destinations that are further from our point of origin will have a greater carry weight per-bag. We also want to evaluate what the relationship is with per-capita loaded percentage.
+
+# COMMAND ----------
+
 perc_df = (loaded_df
              .groupBy("flight_id", "passenger_count")
              .agg(sum("bag_weight_kg"), count("bag_id"))

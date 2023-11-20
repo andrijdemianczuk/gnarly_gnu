@@ -64,7 +64,7 @@ bags_df = spark.table(f"{catalog}.{database}.bag_tracking")
 # COMMAND ----------
 
 # DBTITLE 1,Build the latest collection of flights
-"w = Window.partitionBy("Flight_Number").orderBy(col("Departure_Time").desc())
+w = Window.partitionBy("Flight_Number").orderBy(col("Departure_Time").desc())
 flights_df = flights_df.withColumn("row",row_number().over(w)).filter(col("row") == 1).drop("row")
 
 flights_df = (flights_df
